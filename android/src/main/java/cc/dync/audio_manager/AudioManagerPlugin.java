@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Map;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.embedding.engine.plugins.lifecycle.FlutterLifecycleAdapter;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -243,6 +241,7 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        helper.stop();
     }
 
     @Override
@@ -252,10 +251,6 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        Lifecycle lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding);
-        if(lifecycle.getCurrentState()== Lifecycle.State.DESTROYED){
-            helper.stop();
-        }
     }
 
     @Override
