@@ -20,7 +20,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 /**
  * AudioManagerPlugin
  */
-public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, VolumeChangeObserver.VolumeChangeListener, ActivityAware {
+public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, VolumeChangeObserver.VolumeChangeListener {
 
     private static AudioManagerPlugin instance;
     private Context context;
@@ -249,22 +249,4 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
         instance.channel.invokeMethod("volumeChange", volume);
     }
 
-    @Override
-    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-    }
-
-    @Override
-    public void onDetachedFromActivityForConfigChanges() {
-
-    }
-
-    @Override
-    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
-
-    }
-
-    @Override
-    public void onDetachedFromActivity() {
-
-    }
 }
