@@ -241,7 +241,7 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        helper.stop();
+        helper.release();
     }
 
     @Override
