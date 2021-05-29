@@ -4,11 +4,15 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.embedding.engine.plugins.lifecycle.FlutterLifecycleAdapter;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -18,7 +22,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 /**
  * AudioManagerPlugin
  */
-public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, VolumeChangeObserver.VolumeChangeListener {
+public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, VolumeChangeObserver.VolumeChangeListener, ActivityAware {
 
     private static AudioManagerPlugin instance;
     private Context context;
@@ -244,5 +248,28 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
     @Override
     public void onVolumeChanged(double volume) {
         instance.channel.invokeMethod("volumeChange", volume);
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        Lifecycle lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding);
+        if(lifecycle.getCurrentState()== Lifecycle.State.DESTROYED){
+            helper.stop();
+        }
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+
     }
 }
