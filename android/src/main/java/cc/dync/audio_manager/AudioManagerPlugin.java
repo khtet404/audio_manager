@@ -1,10 +1,13 @@
 package cc.dync.audio_manager;
 
 import android.content.Context;
+import android.net.Credentials;
+import android.net.wifi.hotspot2.pps.Credential;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +33,8 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
 
     private static FlutterAssets flutterAssets;
     private static Registrar registrar;
+
+
 
     private static synchronized AudioManagerPlugin getInstance() {
         if (instance == null) {
@@ -241,7 +246,9 @@ public class AudioManagerPlugin implements FlutterPlugin, MethodCallHandler, Vol
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        helper.release();
+        if(helper!=null) {
+            helper.release();
+        }
     }
 
     @Override
